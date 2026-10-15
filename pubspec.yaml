@@ -1,0 +1,51 @@
+name: fluetpress
+description: "FluetPress — a production-ready Flutter starter template built on a strict MVC architecture with an embedded SQLite database and role-based authentication (Android + iOS)."
+# Prevent accidental publication to pub.dev. Remove this line to publish.
+publish_to: 'none'
+
+# version: <major>.<minor>.<patch>+<build-number>
+# Android: versionName / versionCode — iOS: CFBundleShortVersionString / CFBundleVersion
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.13.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # iOS-style icons.
+  cupertino_icons: ^1.0.8
+
+  # --- Persistence (SQLite) -------------------------------------------------
+  # sqflite is the SQLite plugin for Android & iOS (no extra native setup, no
+  # network access at build time).
+  #
+  # Desktop support is optional: to also run on Windows/macOS/Linux, add
+  # `sqflite_common_ffi: ^2.4.4`, call `sqfliteFfiInit()` +
+  # `databaseFactory = databaseFactoryFfi` once at startup, and build the
+  # platform folders with `flutter create --platforms windows,macos,linux .`.
+  # See the "Extending" section of the README.
+  sqflite: ^2.4.4
+  # path is used to build platform-correct database file paths.
+  path: ^1.9.0
+
+  # --- Security -------------------------------------------------------------
+  # crypto provides SHA-256 for the template's password hashing (see README).
+  crypto: ^3.0.7
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Assets / fonts would be declared here, e.g.:
+  # assets:
+  #   - assets/images/
+  # fonts:
+  #   - family: Inter
+  #     fonts:
+  #       - asset: assets/fonts/Inter-Regular.ttf
