@@ -1,0 +1,12 @@
+{
+  "_comment": [
+    "Example build configuration for the DEVELOPMENT flavor.",
+    "Copy to config/dev.json and run:",
+    "  flutter run --dart-define-from-file=config/dev.json",
+    "config/*.json is git-ignored; only *.example.json is committed."
+  ],
+  "APP_FLAVOR": "dev",
+  "API_BASE_URL": "https://api.dev.fluetpress.example/v1",
+  "API_KEY": "",
+  "USE_REMOTE_AUTH": false
+}

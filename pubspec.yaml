@@ -1,5 +1,5 @@
 name: fluetpress
-description: "FluetPress — a production-ready Flutter starter template built on a strict MVC architecture with an embedded SQLite database and role-based authentication (Android + iOS)."
+description: "FluetPress — a production-ready Flutter client boilerplate: feature-first architecture, MVC controllers, offline SQLite, secure token storage, Dio networking with JWT refresh, go_router auth guards and multi-flavor environments (Android + iOS)."
 # Prevent accidental publication to pub.dev. Remove this line to publish.
 publish_to: 'none'
 
@@ -14,33 +14,58 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # iOS-style icons.
-  cupertino_icons: ^1.0.8
+  # --- State management & dependency injection ------------------------------
+  # `provider` supplies the app's controllers/services to the widget tree.
+  provider: ^6.1.5+1
 
-  # --- Persistence (SQLite) -------------------------------------------------
-  # sqflite is the SQLite plugin for Android & iOS (no extra native setup, no
-  # network access at build time).
-  #
-  # Desktop support is optional: to also run on Windows/macOS/Linux, add
-  # `sqflite_common_ffi: ^2.4.4`, call `sqfliteFfiInit()` +
-  # `databaseFactory = databaseFactoryFfi` once at startup, and build the
-  # platform folders with `flutter create --platforms windows,macos,linux .`.
-  # See the "Extending" section of the README.
+  # --- Routing --------------------------------------------------------------
+  # go_router drives deep links, web URLs and the authentication route guard.
+  go_router: ^18.1.0
+
+  # --- Networking -----------------------------------------------------------
+  # dio is the HTTP client; pretty_dio_logger prints request/response logs in
+  # non-production flavors. connectivity_plus powers the offline banner.
+  dio: ^5.11.1
+  pretty_dio_logger: ^1.4.0
+  connectivity_plus: ^7.3.2
+
+  # --- Local storage --------------------------------------------------------
+  # sqflite: offline SQLite cache and the local demo user store.
   sqflite: ^2.4.4
-  # path is used to build platform-correct database file paths.
   path: ^1.9.0
+  # flutter_secure_storage: encrypted (Keychain / Keystore) storage for tokens.
+  flutter_secure_storage: ^11.2.0
 
   # --- Security -------------------------------------------------------------
-  # crypto provides SHA-256 for the template's password hashing (see README).
+  # crypto provides SHA-256 for the local password hashing (see README).
   crypto: ^3.0.7
+
+  # --- Immutable models (runtime) -------------------------------------------
+  # Annotations consumed by the generated *.freezed.dart / *.g.dart files.
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.12.0
+
+  # --- UI -------------------------------------------------------------------
+  cupertino_icons: ^1.0.8
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
 
+  # --- Code generation ------------------------------------------------------
+  # Run: dart run build_runner build
+  build_runner: ^2.16.2
+  freezed: ^4.0.2
+  json_serializable: ^6.14.1
+
 flutter:
   uses-material-design: true
+
+  # Environment/secret files are supplied at build time with
+  #   --dart-define-from-file=config/<flavor>.json
+  # (see config/*.example.json and the README), so nothing secret is bundled
+  # from the repository.
 
   # Assets / fonts would be declared here, e.g.:
   # assets:

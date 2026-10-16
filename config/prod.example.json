@@ -1,0 +1,15 @@
+{
+  "_comment": [
+    "Example build configuration for the PRODUCTION flavor.",
+    "Copy to config/prod.json (never commit it) and run:",
+    "  flutter build appbundle --release --dart-define-from-file=config/prod.json",
+    "Note the flavour/profile names chosen here are the ones the app reports in",
+    "the Settings screen and in its log output.",
+    "USE_REMOTE_AUTH=false keeps the offline demo store; set it to true and",
+    "point API_BASE_URL at your real backend to enable the JWT flow."
+  ],
+  "APP_FLAVOR": "prod",
+  "API_BASE_URL": "https://api.fluetpress.example/v1",
+  "API_KEY": "",
+  "USE_REMOTE_AUTH": false
+}

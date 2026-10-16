@@ -1,0 +1,12 @@
+{
+  "_comment": [
+    "Example build configuration for the STAGING flavor.",
+    "Copy to config/staging.json and run:",
+    "  flutter run --dart-define-from-file=config/staging.json",
+    "config/*.json is git-ignored; only *.example.json is committed."
+  ],
+  "APP_FLAVOR": "staging",
+  "API_BASE_URL": "https://api.staging.fluetpress.example/v1",
+  "API_KEY": "",
+  "USE_REMOTE_AUTH": false
+}

@@ -123,3 +123,14 @@ app.*.symbols
 *.iml
 *.ipr
 *.iws
+
+# --- FluetPress app-specific -------------------------------------------------
+
+# Local build configuration (flavors/config). Only the examples are committed;
+# real files may hold client API keys, so they stay out of the repository.
+/config/*.json
+!/config/*.example.json
+
+# `*.lock` above would otherwise hide the pinned dependency set. Applications
+# (as opposed to packages) commit this file so every machine builds identically.
+!pubspec.lock
