@@ -134,3 +134,5 @@ app.*.symbols
 # `*.lock` above would otherwise hide the pinned dependency set. Applications
 # (as opposed to packages) commit this file so every machine builds identically.
 !pubspec.lock
+.vercel
+.env*

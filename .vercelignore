@@ -1,0 +1,10 @@
+.git
+.dart_tool
+.idea
+android
+ios
+test
+config
+build/*
+!build/web
+!build/web/**
