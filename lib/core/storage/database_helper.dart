@@ -1,5 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 import '../utils/app_constants.dart';
 import '../utils/password_hasher.dart';
@@ -44,18 +47,21 @@ class DatabaseHelper {
   bool get isOpen => _database?.isOpen ?? false;
 
   // --- Platform bootstrapping -------------------------------------------------
-  // Android and iOS are fully supported out of the box: the native `sqflite`
-  // plugin ships the SQLite implementation, so no factory registration is
-  // needed here. For optional desktop support see the README
-  // ("Optional: desktop support").
-
-  // --- Lifecycle -------------------------------------------------------------
 
   /// Opens (and on first run creates + seeds) the database.
   ///
   /// Await this during bootstrapping so the schema and the default accounts
   /// exist before the first frame is rendered.
   Future<void> initialize() async {
+    if (kIsWeb) {
+      databaseFactory = databaseFactoryFfiWeb;
+    } else if (defaultTargetPlatform == TargetPlatform.windows ||
+        defaultTargetPlatform == TargetPlatform.macOS ||
+        defaultTargetPlatform == TargetPlatform.linux) {
+      sqfliteFfiInit();
+      databaseFactory = databaseFactoryFfi;
+    }
+
     final Database db = await database;
     // Touch the table so creation/migration/seeding completes before returning.
     await db.query(usersTable, limit: 1);
@@ -70,25 +76,31 @@ class DatabaseHelper {
 
   /// Deletes the database file completely — handy while developing or testing.
   Future<void> deleteDatabaseFile() async {
-    final String path = p.join(
-      await getDatabasesPath(),
-      AppConstants.databaseName,
-    );
+    final String path = kIsWeb
+        ? AppConstants.databaseName
+        : p.join(
+            await getDatabasesPath(),
+            AppConstants.databaseName,
+          );
     await close();
     await deleteDatabase(path);
   }
 
   Future<Database> _open() async {
-    final String path = p.join(
-      await getDatabasesPath(),
-      AppConstants.databaseName,
-    );
+    final String path = kIsWeb
+        ? AppConstants.databaseName
+        : p.join(
+            await getDatabasesPath(),
+            AppConstants.databaseName,
+          );
 
     return openDatabase(
       path,
       version: AppConstants.databaseVersion,
       onConfigure: (Database db) async {
-        await db.execute('PRAGMA foreign_keys = ON');
+        if (!kIsWeb) {
+          await db.execute('PRAGMA foreign_keys = ON');
+        }
       },
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,

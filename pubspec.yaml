@@ -47,6 +47,8 @@ dependencies:
 
   # --- UI -------------------------------------------------------------------
   cupertino_icons: ^1.0.8
+  sqflite_common_ffi: ^2.4.4
+  sqflite_common_ffi_web: ^1.2.0
 
 dev_dependencies:
   flutter_test:
